@@ -1,0 +1,48 @@
+import sqlite3
+
+
+#Creating the database
+
+con=sqlite3.connect('mydb')
+mycursor=con.cursor()
+
+
+#Creating Table
+
+query1="CREATE TABLE IF NOT EXISTS Movies(Moviename varchar,Actor varchar,Actress varchar, Director varchar, Year varchar)"
+con.execute(query1)
+
+
+#Insertion of the data
+
+mn=input("Enter the movie name")
+actor=input("Enter the actor name")
+actress=input("Enter the actress name")
+dir=input("Enter the director name")
+year=input("Enter the movie release date")
+sql = ''' INSERT INTO Movies(Moviename,Actor,Actress,Director,Year)
+              VALUES(?,?,?,?,?) '''
+ta=(mn,actor,actress,dir,year)
+mycursor.execute(sql,ta)
+print('Data Entered')
+
+
+#printing all the data present in the table
+
+sql1='''SELECT * FROM Movies'''
+mycursor.execute(sql1)
+check=mycursor.fetchall()
+print(check)
+
+
+
+
+#printing only the selcted data from the table
+
+sql2='''SELECT * FROM MOVIES WHERE Actor = "PRABHAS" '''
+mycursor.execute(sql2)
+check1=mycursor.fetchall()
+print(check1)
+con.commit()
+con.close()
+
